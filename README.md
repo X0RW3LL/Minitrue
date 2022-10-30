@@ -17,17 +17,17 @@ PEN-200 Students
 
 ## Environment Setup
 ```sh
-# NOTE: Consider installing libgdiplus via apt to avoid seeing irrelevant ImportErrors
-#      	related to the aspose library
+# NOTE: consider installing libgdiplus via apt to avoid seeing irrelevant ImportErrors
+#       related to the aspose library
 $ sudo apt install libgdiplus
 
-# clone the repo into a location of your choice
+# clone the repo into a directory of your choice
 $ git clone https://github.com/X0RW3LL/Minitrue.git
 
 # cd into the repo after it's been cloned locally
 $ cd Minitrue
 
-# Install package requirements inside the packages directory
+# install package requirements inside the packages directory
 $ pip3 install -t packages/ -r requirements.txt
 
 # grant execute permissions to the script
