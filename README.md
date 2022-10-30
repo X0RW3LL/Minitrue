@@ -2,7 +2,10 @@
 Manufacturing Truth since 1984
 
 ## What It Is
-**Minitrue** is a malicious document generator that can run on Linux without having the need to install MS Office products.
+**Minitrue** is a malicious document generator that can run on Linux without having the need to install MS Office products
+
+## Disclaimer
+This tool is designed to help make the maldoc generation easier for you. However, I highly recommend **NOT** skipping the manual method taught in the PEN-200 course materials
 
 ## Target Audience
 PEN-200 Students
