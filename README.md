@@ -37,7 +37,7 @@ $ sudo dpkg -i libicu63_63.1-6+deb10u3_amd64.deb
 ```
 #### *Note for future readers*
 I have archived the download page and package in case the link goes dead at any point
-- [Debian package download page](https://web.archive.org/web/20221102093638/https%3A%2F%2Fpackages.debian.org%2Fbuster%2Famd64%2Flibicu63%2Fdownload)\
+- [Debian package download page](https://web.archive.org/web/20221102093638/https%3A%2F%2Fpackages.debian.org%2Fbuster%2Famd64%2Flibicu63%2Fdownload)
 - [libicu63_63.1-6+deb10u3_amd64.deb - [North America Mirror]](https://web.archive.org/web/20221102103704/http%3A%2F%2Fftp.ca.debian.org%2Fdebian%2Fpool%2Fmain%2Fi%2Ficu%2Flibicu63_63.1-6%252Bdeb10u3_amd64.deb)
 
 Credit to [@securingdev](https://github.com/securingdev) for bringing [this issue](https://github.com/X0RW3LL/Minitrue/issues/1)  to my attention
