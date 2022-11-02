@@ -18,6 +18,30 @@ PEN-200 Students
 - Embedded simple HTTP server to host generated documents
 - Clipboard-friendly payload URLs
 
+## Project Dependencies
+Aspose.Words relies on a specific version of ICU (libicu63) for unicode/ico support\
+However, this package is no longer in the Kali repos, so we have to install it manually from the Debian buster repo
+
+- Navigate to https://packages.debian.org/buster/amd64/libicu63/download
+- Download the libicu63 package using any of the listed mirrors
+- Verify the package SHA256 checksum
+- Install the package
+
+```sh
+# Verify sha256 checksum one-liner
+# Provided SHA256 hash is 38f65aaec4ee088f65330cf636c1cd6edef38109c80559836ecf38e2390a5761 at the time of writing this guide
+
+$ [ "$(sha256sum libicu63_63.1-6+deb10u3_amd64.deb | cut -d ' ' -f1)" == "38f65aaec4ee088f65330cf636c1cd6edef38109c80559836ecf38e2390a5761" ] && echo '[+] SHA256 checksum OK' || echo "[-] SHA256 checksum mismatch"
+
+$ sudo dpkg -i libicu63_63.1-6+deb10u3_amd64.deb
+```
+#### *Note for future readers*
+I have archived the download page and package in case the link goes dead at any point
+- [Debian package download page](https://web.archive.org/web/20221102093638/https%3A%2F%2Fpackages.debian.org%2Fbuster%2Famd64%2Flibicu63%2Fdownload)\
+- [libicu63_63.1-6+deb10u3_amd64.deb - [North America Mirror]](https://web.archive.org/web/20221102103704/http%3A%2F%2Fftp.ca.debian.org%2Fdebian%2Fpool%2Fmain%2Fi%2Ficu%2Flibicu63_63.1-6%252Bdeb10u3_amd64.deb)
+
+Credit to [@securingdev](https://github.com/securingdev) for bringing [this issue](https://github.com/X0RW3LL/Minitrue/issues/1)  to my attention
+
 ## Environment Setup
 ```sh
 # NOTE: consider installing libgdiplus via apt to avoid seeing irrelevant ImportErrors
