@@ -28,7 +28,7 @@ However, this package is no longer in the Kali repos, so we have to install it m
 - Install the package
 
 ```sh
-# Verify sha256 checksum one-liner
+# Verify SHA256 checksum one-liner
 # Provided SHA256 hash is 38f65aaec4ee088f65330cf636c1cd6edef38109c80559836ecf38e2390a5761 at the time of writing this guide
 
 $ [ "$(sha256sum libicu63_63.1-6+deb10u3_amd64.deb | cut -d ' ' -f1)" == "38f65aaec4ee088f65330cf636c1cd6edef38109c80559836ecf38e2390a5761" ] && echo '[+] SHA256 checksum OK' || echo "[-] SHA256 checksum mismatch"
