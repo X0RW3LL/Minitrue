@@ -37,7 +37,7 @@ kali@kali:~$ wget http://ftp.us.debian.org/debian/pool/main/i/icu/libicu63_63.1-
 kali@kali:~$ [ "$(sha256sum libicu63_63.1-6+deb10u3_amd64.deb | cut -d ' ' -f1)" == "38f65aaec4ee088f65330cf636c1cd6edef38109c80559836ecf38e2390a5761" ] && echo '[+] SHA256 checksum OK' || echo "[-] SHA256 checksum mismatch"
 
 kali@kali:~$ sudo apt install ./libicu63_63.1-6+deb10u3_amd64.deb
-kali@kali:~$ sudo apt update && sudo apt install libssl-dev libssl-1.1
+kali@kali:~$ sudo apt update && sudo apt install libssl-dev libssl1.1
 ```
 #### *Note for future readers*
 I have archived the download page and package in case the link goes dead at any point
