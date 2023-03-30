@@ -85,11 +85,11 @@ kali@kali:~/Minitrue$ ./minitrue
   - You may reach out via [Twitter](https://twitter.com/X0RW3LL) or Discord: `X0RW3LL#6548`
 
 ## Credits
-Special thanks to the entire Offensive-Security team, as well as the amazing community that's helped me through my journey :heart:
+Special thanks to the entire OffSec team, as well as the amazing community that's helped me through my journey :heart:
 
 ## Links
-[Offensive-Security Official Website](https://www.offensive-security.com)\
-[Offensive-Security Community Discord](https://offs.ec/discord)\
+[OffSec Official Website](https://www.offsec.com)\
+[OffSec Community Discord](https://offs.ec/discord)\
 [Kali Linux & Friends Discord](https://discord.kali.org/)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F1F3EFYS1)
