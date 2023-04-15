@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-import os, sys
+import os
+import sys
 cwd = os.getcwd()
 sys.path.insert(0, "{}/packages".format(cwd))
 import aspose.words as aw
@@ -10,10 +11,14 @@ def doc_gen(payload, mode=1, filename='report'):
     Malicious document generator, aka Minitrue
     It's really a Word document processing library that can
     embed macros in Office documents
-    
-    Parameters:
-    payload (str): macro string returned from psh_splitter.psh_concat
-    mode (int): Specifies whether a payload should be embedded as a VBA Macro or an icon
+
+    :param payload: Macro string returned from psh_splitter.psh_concat
+    :type payload: str
+    :param mode: Specifies whether a payload should be embedded as a VBA Macro or an icon
+    :type mode: int
+    :param filename: Filename for the Word document to be saved as (default report)
+    :type filename: str
+    :return: Malicious Word document ready to be sent down the first pneumatic tube
     """
     print('\n[+] Generating malicious document...')
     if not filename:

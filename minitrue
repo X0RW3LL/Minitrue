@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-import re, subprocess, os, sys
+import re
+import subprocess
+import os
+import sys
 from helpers.server import serve
 from helpers.prompts import *
 from helpers.doc_generator import doc_gen
@@ -11,13 +14,13 @@ sys.path.insert(0, "{}/packages".format(cwd))
 from prompt_toolkit import prompt
 
 version = '\033[3m{}\033[0m'.format('V1.0')
-banner = (f'''
+banner = (f"""
     __  ________   ________________  __  ________
    /  |/  /  _/ | / /  _/_  __/ __ \/ / / / ____/
-  / /|_/ // //  |/ // /  / / / /_/ / / / / __/   
- / /  / // // /|  // /  / / / _, _/ /_/ / /___   
+  / /|_/ // //  |/ // /  / / / /_/ / / / / __/
+ / /  / // // /|  // /  / / / _, _/ /_/ / /___
 /_/  /_/___/_/ |_/___/ /_/ /_/ |_|\____/_____/{version}
-''')
+""")
 
 print(
         banner,
@@ -58,7 +61,7 @@ def main():
     filename = prompter('[?] Select or enter file name (without extensions): ', filenames)
     platform = payload.split('/')[0]
     arch_group = payload.split('/')[1]
-    
+
     if 'x' not in arch_group:
         arch = 'x86'
     else:

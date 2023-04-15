@@ -4,13 +4,18 @@ import http.server
 import socketserver
 
 def serve(PORT, DIRECTORY, interface, filename):
-    '''
+    """
     Simple Python HTTP Server
-    
-    Parameters:
-    PORT (int): PORT number to start listening on
-    DIRECTORY (str): Path to start serving
-    '''
+
+    :param PORT: Port number to start listening on
+    :type PORT: int
+    :param DIRECTORY: Path to be served
+    :type DIRECTORY: str
+    :param interface: Interface IPv4 address
+    :type interface: str
+    :param filename: Filename to be retrieved
+    :type filename: str
+    """
     class Handler(http.server.SimpleHTTPRequestHandler):
         # Credit: https://stackoverflow.com/a/60658958
         def __init__(self, *args, **kwargs):
