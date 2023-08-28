@@ -15,6 +15,9 @@ def psh_concat(hta):
 Sub AutoOpen()
     DocumentFormatter
 End Sub
+Sub Document_Open()
+    DocumentFormatter
+End Sub
 Sub DocumentFormatter()
     Dim Str As String
 
