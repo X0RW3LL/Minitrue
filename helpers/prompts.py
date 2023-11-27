@@ -2,7 +2,7 @@
 
 import os, sys
 cwd = os.getcwd()
-sys.path.insert(0, "/home/x0rw3ll/Minitrue/packages")
+sys.path.insert(0, "{}/packages".format(cwd))
 from prompt_toolkit.completion import WordCompleter as w_com
 
 payloads = w_com([
