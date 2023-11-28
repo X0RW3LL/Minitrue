@@ -15,7 +15,7 @@ cwd = os.getcwd()
 sys.path.insert(0, "{}/packages".format(cwd))
 from prompt_toolkit import prompt
 
-version = '\033[3m{}\033[0m'.format('V1.0.2')
+version = '\033[3m{}\033[0m'.format('V1.0.3')
 banner = (f"""
     __  ________   ________________  __  ________
    /  |/  /  _/ | / /  _/_  __/ __ \/ / / / ____/
