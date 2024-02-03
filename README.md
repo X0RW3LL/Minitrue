@@ -23,7 +23,7 @@ PEN-200 learners
 
 ## Project Dependencies
 
-- libicu63 (manually downloaded and installed via apt. Credit to [@securingdev](https://github.com/securingdev) for bringing [this issue](https://github.com/X0RW3LL/Minitrue/issues/1)  to my attention)
+- libicu63 (deb packge is automatically downloaded via wget and installed via apt. Credit to [@securingdev](https://github.com/securingdev) for bringing [this issue](https://github.com/X0RW3LL/Minitrue/issues/1)  to my attention)
 - libssl1.1 (built from source)
 - libgdiplus (apt)
 - aspose-words (pypi)
