@@ -56,7 +56,7 @@ kali@kali:~/Minitrue$ ./minitrue
 - **What about contributions?**
   - Contribution is highly encouraged. Create a PR and we may discuss it
 - **How can I contact you?**
-  - You may reach out via [Twitter](https://twitter.com/X0RW3LL) or Discord: `@x0rw3ll`
+  - You may reach out via Discord: `@x0rw3ll`
 
 ## Credits
 Special thanks to the entire OffSec team, as well as the amazing community that's helped me through my journey :heart:
